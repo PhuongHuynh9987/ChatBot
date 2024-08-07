@@ -67,11 +67,10 @@ export default function Start() {
             <input type="text" value={askAssistance} onChange={(e)=> setAskAssistance(e.target.value)}></input>
           </form>
         )}
-
+       
         {loading && (
             <h2>Loading...</h2>
-        )
-        }
+        )}
     </div>
   )
 }
