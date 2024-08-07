@@ -8,14 +8,17 @@ export default function Start() {
     const [assistance, setAssistance] = useState('');
     const [askAssistance, setAskAssistance]= useState('');
     const [redirect, setRedirect]= useState(false);
+    const [loading, setLoading]= useState(false);
     const [intro, setIntro] = useState([]);
   
     async function getAssistance(e){
         e.preventDefault()
+        setLoading(true)
       try {
             await axios.post("/fetch_assistance", {fectchAssistance}).then(data=> {
               setIntro(data.data.introduction)
               setAssistance(data.data.topic)
+                setLoading(false)
             })
         }
         catch(e){
@@ -25,12 +28,15 @@ export default function Start() {
 
   async function askingAssistance(e){
     e.preventDefault()
+      setLoading(true)
     try {
       await axios.post("/chat", {
         'topic':assistance,
         'newMessage':askAssistance,
       }).then(data=> {
+          setLoading(false);
         setRedirect(true);
+          
       })
     }
     catch(e){
@@ -43,9 +49,6 @@ export default function Start() {
 
   if(redirect) {
     return <Navigate to="/chatWindow" state = {{topic : assistance}} />
-
-    // return <Navigate to="/chatWindow" state={{ conversation: conversation,topic: assistance }} />
-    // return <Navigate to="/chatWindow" state={{ topic: assistance, system: system, user: user }} />
   }
 
   return (
@@ -64,6 +67,10 @@ export default function Start() {
             <input type="text" value={askAssistance} onChange={(e)=> setAskAssistance(e.target.value)}></input>
           </form>
         )}
+
+        {loading && (
+            <h2>Loading...</h2>
+        }
     </div>
   )
 }
