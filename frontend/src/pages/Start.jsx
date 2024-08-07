@@ -53,14 +53,14 @@ export default function Start() {
 
   return (
     <div className="start">
-        {!assistance  && (
+        {!assistance && !loading  && (
            <form onSubmit={getAssistance}>
             <h1 className="mb-5">What would you like me to be?</h1>
             <input type="text" value={fectchAssistance} onChange={(e)=> setFectchAssistance(e.target.value)}></input>
           </form>
         )}
 
-        {assistance && (
+        {assistance && !loading  && (
           <form onSubmit={askingAssistance}>
             <h1>{intro}</h1>
             <h2>How can I help you?</h2>
