@@ -70,6 +70,7 @@ export default function Start() {
 
         {loading && (
             <h2>Loading...</h2>
+        )
         }
     </div>
   )
